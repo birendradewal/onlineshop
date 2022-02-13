@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title> {% block title %}{% endblock %} </title>
+    <link rel="stylesheet" href="/static/home.css?{% now 'U' %}" />
+  <link rel="stylesheet" href="/static/about.css?{% now 'U' %}" />
+  <link rel="stylesheet" href="/static/contact.css?{% now 'U' %}" />
+  <link rel="stylesheet" href="/static/profile.css?{% now 'U' %}" />
+  <link rel="stylesheet" href="/static/login.css?{% now 'U' %}" />
+  <link rel="stylesheet" href="/static/signup.css?{% now 'U' %}">
+  <link rel="icon" type="image" href="{% static '/Images/lo.jpg' %}">
+</head>
+
+<body>
+  
+  {% if messages %}
+  {% for message in messages %}
+  <div class="alert" id="msg" role="alert">{{ message }}</div>
+  {% endfor %}
+  {% endif %}
+  <script>
+    setTimeout(function(){
+    const msg=document.getElementById('msg');
+    msg.style="opacity: 0;";
+    setTimeout(function(){
+      msg.style.display="none";
+    }, 500)
+  }, 5000)
+  </script>
+
+<div class="arrow">
+  <a href="#" title="Back to Top"><span class="angle-up"></span></a>
+</div>
+
+<div class="second">
+  <div class="logoName">
+    <a href="/">
+      <div class="logo">
+        <img src="{% static '/Images/lo.jpg' %}">
+      </div>
+      <div class="name">
+        <h1 style="color: #00282cef;">ABSS</h1>
+        <h3 style="color: #00282cef;">E-Store</h3>
+      </div>
+      </a>
+    </div>
+  </div>
+  <div class="searchbar">
+    <form class="search-input" method="GET" action="{% url 'itemlists' %}">
+      {% csrf_token %}
+      <input type="text" autocomplete="off" placeholder="Search over ABSS E-Store..." name="q" onfocus="this.value = '';"
+      onblur="if (this.value == '') {this.value = 'Search over ABSS E-Store...';}" required="">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <div class="losi">
+    {% if user.is_authenticated %}
+    <div class="login">
+      <a href="{%url 'profile' %}"><img src="{% static '/Images/login.svg' %}" title="View Profile" width="30" alt="login"></a>
+    </div>
+    <div class="login">
+      <a href="{%url 'carts' %}"><img src="{% static '/Images/cart.svg' %}"  title="Cart" width="40" alt="cart"></a>
+    </div>
+    <!-- <div class="login"> 
+      <a href="{%url 'bought' %}">Bought Items</a>
+    </div> -->
+    <div class="signup">
+      <a href="{% url 'logout' %}"><img src="{% static '/Images/logout.svg' %}" title="Log-Out" width="30" alt="login"></a>
+    </div>{% else %}
+    <div class="login">
+      <a href="{% url 'login' %}"><img src="{% static '/Images/login.svg' %}" title="Log-In" width="30" alt="login"></a>
+    </div>
+    <div class="signup">
+      <a href="{% url 'login' %}"><img src="{% static '/Images/cart.svg' %}" title="Cart" width="35" alt="cart"></a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="third">
+  <div class="container">
+    <ul class="nav-list">
+      <li><a href="/">Home</a></li>
+      <li><a href="{% url 'itemlist' %}">Shop</a></li>
+      <li><a href="#">Categories <i class="down"></i></a>
+        <ul class="dropdown">
+          <div class="jeans-list">
+          <li style="color: white; background: #000;">Male Clothing</li>
+          <li><a href="{% url 'itemlisted' 'Coat' %}">Coat</a></li>
+          <li><a href="{% url 'itemlisted' 'Pant' %}">Pants</a></li>
+          <li><a href="{% url 'itemlisted' 'Inner-Coat' %}">Inner-Coat</a></li>
+          <li><a href="{% url 'itemlisted' 'Shirt' %}">Shirt</a></li>
+          <li><a href="{% url 'itemlisted' 'Tie' %}">Tie</a></li>
+          <li><a href="{% url 'itemlisted' 'Daura-Suruwal' %}">Daura-Suruwal</a></li>
+          </div>
+          <div class="ladies-list">
+            <li style="color: white; background: #000;">Female Clothing</li>
+            <li><a href="{% url 'itemlisted' 'Sari' %}">Sari</a></li>
+          <li><a href="{% url 'itemlisted' 'Lhenga' %}">Lhenga</a></li>
+          <li><a href="{% url 'itemlisted' 'Kurtha' %}">Kurtha</a></li>
+          <li><a href="{% url 'itemlisted' 'Ladies-Jeans' %}">Ladies-Jeans</a></li>
+          <li><a href="{% url 'itemlisted' 'Ladies-Shirt' %}">Ladies-Shirt</a></li>
+          </div>
+          <div class="kids-list">
+            <li style="color: white; background: #000;">Kids Clothing</li>
+            <li><a href="{% url 'itemlisted' 'Baby-Fork' %}">Baby-Fork</a></li>
+          <li><a href="{% url 'itemlisted' 'Baby-Pamper' %}">Baby-Pamper</a></li>
+          </div>
+        </ul>
+      </li>
+      <li><a href="{% url 'about' %}">About Us</a></li>
+      <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="soci-medi">
+      <img src="{% static '/Images/facebook.svg' %}" width="25" alt="facebook">
+      <img src="{% static '/Images/twitter.svg' %}" width="25" alt="twitter">
+      <img src="{% static '/Images/pinterest.svg' %}" width="25" alt="pinterest">
+      <img src="{% static '/Images/linkedin.svg' %}" width="25" alt="linkedin">
+    </div>
+  </div>
+  
+  {% block body %}
+  
+  {% endblock %}
+
+  <div class="whole">
+    <center>
+      <div class="top">
+        <div class="leftpart">
+          <center>
+            <h1>STAY CONNECTED</h1>
+            <a href="#"><img src="{% static '/images/face.png' %}" width="40px"
+                height="40px"></a>
+                <a href="#"> <img src="{% static '/images/twitt.png' %}" width="40px"
+                height="40px"></a>
+                <a href="#"><img src="{% static '/images/insta.png' %}" width="40px"
+                  height="40px"></a>
+            <h1>PAYMENT METHOD</h1>
+            <img src="{% static '/images/esewa.png' %}" width="40px" height="40px">
+            <img src="{% static '/images/cash.png' %}" width="40px" height="40px">
+          </center>
+        </div>
+        <div class="midpart">
+          <center>
+            <h1>BE OUR FRIEND</h1>
+            <input type="text" name="email" placeholder="Enter Your E-mail Here!" autocomplete="off"><br>
+            <div class="popup">
+              <button onclick="mySub()">Subscribe Now</button>
+            <span class="popuptext" id="myPopup">Thank You For Subscribing!!!</span>
+            </div>
+          </center>
+        </div>
+        <div class="rightpart">
+            <h1>CONTACT US</h1>
+            <h2>ABSS E-Store<br>
+              Email: info@abss.com</h2>
+              <h2><p> 
+                Byasi-02, Kalighat, Bhaktapur
+                Bagmati Province,<br>
+                Nepal
+              </p></h2>
+            </div>
+      </div>
+      <div class="bottom">
+        <center>
+          <h1>Copyright © 2021 ABSS E-Store. All rights reserved.<br>
+            All works are property of their respective owners and may not be used elsewhere without written permission.
+          </h1>
+        </center>
+      </div>
+    </center>
+  </div>
+
+  <script src="/static/Js/home.js"></script>
+</body>
+
+</html>
